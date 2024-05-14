@@ -1,0 +1,17 @@
+name: Docker Image CI
+
+on:
+  workflow_run:
+    workflows: ["Python application"]
+    types: 
+      - completed
+
+jobs:
+# do only, if tests were successful https://github.com/orgs/community/discussions/26238
+if: ${{ github.event.workflow_run.conclusion == 'success' }}
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
