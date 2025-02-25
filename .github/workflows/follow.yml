@@ -8,8 +8,8 @@ on:
 
 jobs:
 # do only, if tests were successful https://github.com/orgs/community/discussions/26238
-if: ${{ github.event.workflow_run.conclusion == 'success' }}
   build:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       -
