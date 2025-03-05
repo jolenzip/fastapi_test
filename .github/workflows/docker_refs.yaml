@@ -17,7 +17,8 @@ jobs:
         id: check2
         uses: actions/checkout@v4
         with:
-          repo: jonaslenz/toolbox.e3d
+          repository: jonaslenz/toolbox.e3d
+          ref: use_e3d_service
 
       - name: write build.log file
         env:
