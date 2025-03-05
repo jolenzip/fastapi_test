@@ -10,24 +10,21 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: checkout-1
-        id: check1
+        id: checkout-dproc
         uses: actions/checkout@v4
 
       - name: checkout 2
-        id: check2
+        id: checkout-erosion3d
         uses: actions/checkout@v4
         with:
           repository: jonaslenz/toolbox.e3d
           ref: use_e3d_service
 
       - name: write build.log file
-        env:
-          AWS_PW: ${{ steps.check2.outputs.commit }}
-          AWS_USER: ${{ steps.check2.outputs.ref }}
         run: |
           cat <<EOF > build.log
-          test: ref "${{ steps.check1.outputs.ref }}", commit ${{ steps.check1.outputs.commit }}
-          toolbox: ref "$AWS_PW", commit "$AWS_USER"
+          erosion-3d: ref "${{ steps.checkout-erosion3d.outputs.ref }}", commit "${{ steps.checkout-erosion3d.outputs.commit }}"
+          dproc: ref "${{ steps.checkout-dproc.outputs.ref }}", commit "${{ steps.checkout-dproc.outputs.commit }}"
           EOF
 
           echo "cat build.log"
