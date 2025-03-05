@@ -33,5 +33,5 @@ jobs:
           ref2="$AWS_USER"
           EOF
 
-          echo "cat .Renviron"
-          cat .Renviron
+          echo "cat build.log"
+          cat build.log
