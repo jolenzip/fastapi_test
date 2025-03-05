@@ -1,0 +1,37 @@
+on:
+  push:
+    branches:
+    - main
+    - test_build.log
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: checkout-1
+        id: check1
+        uses: actions/checkout@v4
+
+      - name: checkout 2
+        id: check2
+        uses: actions/checkout@v4
+        with:
+          repo: jonaslenz/toolbox.e3d
+
+      - name: write build.log file
+        env:
+          AWS_HOST: ${{ steps.check1.outputs.commit }}
+          AWS_PORT: ${{ steps.check1.outputs.ref }}
+          AWS_PW: ${{ steps.check2.outputs.commit }}
+          AWS_USER: ${{ steps.check2.outputs.ref }}
+        run: |
+          cat <<EOF > build.log
+          1commit="$AWS_HOST"
+          1ref="$AWS_PORT"
+          commit2="$AWS_PW"
+          ref2="$AWS_USER"
+          EOF
+
+          echo "cat .Renviron"
+          cat .Renviron
