@@ -22,16 +22,12 @@ jobs:
 
       - name: write build.log file
         env:
-          AWS_HOST: ${{ steps.check1.outputs.commit }}
-          AWS_PORT: ${{ steps.check1.outputs.ref }}
           AWS_PW: ${{ steps.check2.outputs.commit }}
           AWS_USER: ${{ steps.check2.outputs.ref }}
         run: |
           cat <<EOF > build.log
-          1commit="$AWS_HOST"
-          1ref="$AWS_PORT"
-          commit2="$AWS_PW"
-          ref2="$AWS_USER"
+          test: ref "${{ steps.check1.outputs.ref }}", commit ${{ steps.check1.outputs.commit }}
+          toolbox: ref "$AWS_PW", commit "$AWS_USER"
           EOF
 
           echo "cat build.log"
